@@ -1,6 +1,6 @@
 # Flight Finder
 
-A command-line interface (CLI) application to search for flights based on various criteria.
+A command-line interface (CLI) application to search for flights based on various criteria using kiwi's tequila API.
 
 ## Usage
 
