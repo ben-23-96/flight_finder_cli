@@ -51,7 +51,7 @@ class FlightSearch:
         list_of_destinations : list : A list of destination names to fetch the IATA codes for.
 
         Returns
-        city_code_string : str : A comma-separated string of IATA codes for the given destinations.
+        list_of_city_codes : list : A list of IATA codes of the given destinations.
         """
         list_of_city_codes = []
 
