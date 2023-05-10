@@ -76,6 +76,9 @@ def main():
     search_params['fly_from'] = departure_location_code
     search_params['fly_to'] = destination_location_codes
     search_params['flight_type'] = 'round'
+    search_params['ret_from_diff_city'] = False
+    search_params['ret_to_diff_city'] = False
+    search_params['max_stopovers'] = 0
 
     user_confirm = input("\nDo you want to search using thes values? Y/n   ")
     if user_confirm.lower() == 'y':
