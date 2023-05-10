@@ -15,10 +15,10 @@ def main():
                         help="Destination location(s) eg. barcelona or for multiple possible destinations seperate list with space eg.barcelona dublin ")
 
     parser.add_argument("--date-from", type=lambda s: datetime.strptime(s, '%d-%m-%Y').date(), default=datetime.now(
-    ).date(), help="Search for flights from this date (format: YYYY-MM-DD, default: today)")
+    ).date(), help="Search for flights from this date (format: DD-MM-YYYY, default: today)")
 
     parser.add_argument("--date-to", type=lambda s: datetime.strptime(s, '%d-%m-%Y').date(), default=None,
-                        help="Search for flights to this date (format: YYYY-MM-DD, default: one month from date from)")
+                        help="Search for flights to this date (format: DD-MM-YYYY, default: one month from date from)")
 
     parser.add_argument("--departure-day", type=str,
                         help="Departure day eg. friday. Cannot be used alongside --weekend option.")
@@ -76,6 +76,9 @@ def main():
     search_params['fly_from'] = departure_location_code
     search_params['fly_to'] = destination_location_codes
     search_params['flight_type'] = 'round'
+    search_params['ret_from_diff_city'] = False
+    search_params['ret_to_diff_city'] = False
+    search_params['max_stopovers'] = 0
 
     user_confirm = input("\nDo you want to search using thes values? Y/n   ")
     if user_confirm.lower() == 'y':
