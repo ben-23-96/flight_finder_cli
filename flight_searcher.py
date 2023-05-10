@@ -51,7 +51,7 @@ class FlightSearch:
         list_of_destinations : list : A list of destination names to fetch the IATA codes for.
 
         Returns
-        list_of_city_codes : list : A list of IATA codes of the given destinations.
+        city_code_string : str : A comma-separated string of IATA codes for the given destinations.
         """
         list_of_city_codes = []
 
@@ -61,7 +61,9 @@ class FlightSearch:
             if city_code:
                 list_of_city_codes.append(city_code)
 
-        return list_of_city_codes
+        city_codes_string = ','.join(list_of_city_codes)
+
+        return city_codes_string
 
     def search_flights(self, params):
         """
@@ -71,7 +73,7 @@ class FlightSearch:
         params : object : An object containing the search parameters, as according to the tequila search api.
 
         Returns
-        found_flights : lsit : a list containing all found flights for the search destination destination.
+        flight_by_destination : obj : a dictionary with keys for each destination, the value of each key is a list containing all found flights for that destination.
         """
 
         try:
@@ -84,7 +86,7 @@ class FlightSearch:
         else:
             if len(data) > 0:
                 # if flights found
-                found_flights = []
+                flights_by_destination = {}
                 for flight in data:
                     # convert departure and return datetime strings into datetime objects
                     departure = flight['route'][0]['local_departure']
@@ -103,9 +105,11 @@ class FlightSearch:
                             'return date': returning_datetime.date().strftime('%d/%m/%Y'),
                             'return time': returning_datetime.time().strftime('%H:%M'),
                             'link': flight['deep_link']}
-                    found_flights.append(info)
+                    if destination not in flights_by_destination:
+                        flights_by_destination[destination] = []
+                    flights_by_destination[destination].append(info)
                     pprint.pprint(info, indent=2)
-                return found_flights
+                return flights_by_destination
             else:
                 print('no flights found')
                 print(response.json())

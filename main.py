@@ -15,10 +15,10 @@ def main():
                         help="Destination location(s) eg. barcelona or for multiple possible destinations seperate list with space eg.barcelona dublin ")
 
     parser.add_argument("--date-from", type=lambda s: datetime.strptime(s, '%d-%m-%Y').date(), default=datetime.now(
-    ).date(), help="Search for flights from this date (format: DD-MM-YYYY, default: today)")
+    ).date(), help="Search for flights from this date (format: YYYY-MM-DD, default: today)")
 
     parser.add_argument("--date-to", type=lambda s: datetime.strptime(s, '%d-%m-%Y').date(), default=None,
-                        help="Search for flights to this date (format: DD-MM-YYYY, default: one month from date from)")
+                        help="Search for flights to this date (format: YYYY-MM-DD, default: one month from date from)")
 
     parser.add_argument("--departure-day", type=str,
                         help="Departure day eg. friday. Cannot be used alongside --weekend option.")
@@ -74,23 +74,17 @@ def main():
     # print the argument values given, search params the object to be used in the api request to find the flights
     search_params = argument_validator.confirm_validated_arguments()
     search_params['fly_from'] = departure_location_code
+    search_params['fly_to'] = destination_location_codes
     search_params['flight_type'] = 'round'
-    search_params['ret_from_diff_city'] = False
-    search_params['ret_to_diff_city'] = False
-    search_params['max_stopovers'] = 0
 
     user_confirm = input("\nDo you want to search using thes values? Y/n   ")
     if user_confirm.lower() == 'y':
         print(search_params)
-        flights_by_destination = {}
         # search for flights
-        for destination in destination_location_codes:
-            search_params["fly_to"] = destination
-            flights = flight_searcher.search_flights(search_params)
-            flights_by_destination[destination] = flights
+        flights = flight_searcher.search_flights(search_params)
         if args.email:
             email_sender = EmailSender()
-            email_sender.create_email(flights_by_destination, args.email)
+            email_sender.create_email(flights, args.email)
     else:
         return
 

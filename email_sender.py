@@ -51,9 +51,7 @@ class EmailSender:
         """
         for city, flights_list in flights.items():
             # Compile flight information for each city.
-            if not flights_list:
-                continue
-            message = f"Flights to {flights_list[0]['city_from']}:\n"
+            message = f"Flights to {city}:\n"
             for flight in flights_list:
                 message += f"Departure: {flight['city from']} - {flight['departure_date']} {flight['departure_time']}\n"
                 message += f"Return: {flight['city to']} - {flight['return date']} {flight['return time']}\n"
