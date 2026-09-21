@@ -29,13 +29,13 @@ def main():
     parser.add_argument("--weekend", action='store_true',
                         help="Boolean flag to search for weekend flights only, leave on friday return on sunday. Cannot be used alongside --departure-day or --return-day options.")
 
-    parser.add_argument("--dtime-from", type=lambda s: datetime.strptime(s, '%H').time(), default=time(9, 0),
+    parser.add_argument("--dtime-from", type=lambda s: datetime.strptime(s, '%H').time(), default=time(5, 0),
                         help="Earliest departure time (format: HH), default: 09, note: a bigger dtime or rtime range may not return more results eg. 01 and 23, the api may end up prioritsing later cheaper flights, better to set to times you are actually wish to fly from.")
 
     parser.add_argument("--dtime-to", type=lambda s: datetime.strptime(s, '%H').time(),
                         help="Latest departure time (format: HH), default: 9 hours later than dtime-from")
 
-    parser.add_argument("--rtime-from", type=lambda s: datetime.strptime(s, '%H').time(), default=time(9, 0),
+    parser.add_argument("--rtime-from", type=lambda s: datetime.strptime(s, '%H').time(), default=time(5, 0),
                         help="Earliest departure time of returning flight (format: HH), default: 09")
 
     parser.add_argument("--rtime-to", type=lambda s: datetime.strptime(s, '%H').time(),

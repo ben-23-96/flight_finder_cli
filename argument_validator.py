@@ -111,7 +111,7 @@ class ArgumentValidator:
                 time_to = time(23, 0)
             else:
                 time_to = (datetime.combine(datetime.today(),
-                           time_from) + timedelta(hours=9)).time()
+                           time_from) + timedelta(hours=14)).time()
 
         # check time_from is earlier than time_to
         if time_from >= time_to:
@@ -189,7 +189,7 @@ class ArgumentValidator:
         if day.lower() not in days:
             raise ArgumentTypeError(
                 f"{day} is not a valid day. Use full day name eg. monday")
-        return days.index(day)
+        return days.index(day.lower())
 
     def work_out_nights_between(self, departure_day_index, return_day_index):
         """
